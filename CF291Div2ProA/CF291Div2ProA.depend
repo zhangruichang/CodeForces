@@ -1,0 +1,21 @@
+# depslib dependency file v1.0
+1424701270 source:d:\mycbworkspace\cf291div2proa\main.cpp
+	<set>
+	<map>
+	<list>
+	<cmath>
+	<queue>
+	<stack>
+	<ctime>
+	<cstdio>
+	<string>
+	<vector>
+	<climits>
+	<cstdlib>
+	<cstring>
+	<fstream>
+	<iostream>
+	<algorithm>
+	<unordered_set>
+	<unordered_map>
+

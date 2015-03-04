@@ -51,22 +51,21 @@ int main()
         cin>>b; for(int i=0;i<b;i++) cin>>x, B[x]=1;
         cin>>g; for(int i=0;i<g;i++) cin>>y, G[y]=1;
         int lcm=LCM(n, m);
-        for(int i=0;i<lcm;i++)
+        for(int i=0;i<2*lcm;i++)
         {
             int bi=i%n, gi=i%m;
-            if(B[bi]) G[gi]=1;
-            if(G[gi]) B[bi]=1;
+            if(B[bi] || G[gi]) G[gi]=1,B[bi]=1;
         }
         int i;
         for(i=0;i<n+m;i++)
         {
             if(i<n)
             {
-                if(!B[x]) break;
+                if(!B[i]) break;
             }
             else
             {
-                if(!G[y-n]) break;
+                if(!G[i-n]) break;
             }
         }
         puts(i<n+m ? "No" : "Yes");

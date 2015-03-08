@@ -27,25 +27,21 @@ typedef unsigned long long ULL;
 int a[maxn], b[maxn], N[maxn];
 int KMP(int n, int w)
 {
-    int i=0, j=0, cnt=0, base=a[0];
+    int i=0, j=0, cnt=0;//, base=a[0];
     while(i<n)
     {
-        if(j==-1 || a[i]-base==b[j])
+        if(j==-1 || a[i]==b[j])
         {
             i++, j++;
         }
         else
 		{
-			if(j==0)
-			{
-				base=a[i];
-			}
-			else
-				j=N[j];
+            j=N[j];
 		}
         if(j==w)
         {
-            cnt++; j=0;
+            j=N[j];
+            cnt++;
         }
     }
     return cnt;
@@ -75,9 +71,14 @@ int main()
     cin>>n>>w;
     for(int i=0;i<n;i++) cin>>a[i];
     for(int i=0;i<w;i++) cin>>b[i];
-	int tmp=b[0];
-    for(int i=0;i<w;i++) b[i]-=tmp;
-    GetNext(w);
-    cout<<KMP(n, w)<<endl;
+    if(w==1) cout<<n<<endl;
+    else if(n==1) cout<<"0"<<endl;
+    else
+    {
+        for(int i=0;i+1<n;i++) a[i]-=a[i+1];
+        for(int i=0;i+1<w;i++) b[i]-=b[i+1];
+        GetNext(w);//calculate next[0...w], in order to j==patlen, next[patlen] used
+        cout<<KMP(n-1, w-1)<<endl;//matching pat[0...w-1]
+    }
 	return 0;
 }

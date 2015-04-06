@@ -61,7 +61,7 @@ int main()
     while(cin>>str)
     {
         int n=str.size();
-        string ans({str.back()});
+        string ans{str.back()};
         char maxc=str.back();
         for(int i=n-2;i>=0;i--)
         {

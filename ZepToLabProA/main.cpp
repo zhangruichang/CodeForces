@@ -60,29 +60,18 @@ int main()
     string str;
     while(cin>>n)
     {
-        cin>>str;bool ans=0;
+        cin>>str;
         for(int i=0;i<n;i++)
         {
-            if(str[i]=='*')
+            for(int len=1;i+4*len<n;len++)
             {
-                for(int j=i+1;j<n;j++)
-                {
-                    if(str[j]=='*')
-                    {
-                        int k=j-i;
-                        bool ok=1;int l;int cnt=1;
-                        for(l=j+k;l<n;l+=k)
-                        {
-                            if(str[l]=='.') {break;}
-                            cnt++;
-                        }
-                        //cout<<i<<" "<<j<<" "<<cnt<<" "<<k<<endl;
-                        if(cnt>=4) {ans=1;goto L1;}
-                    }
-                }
+                if(str[i]=='*' && str[i+len]=='*' && str[i+2*len]=='*' && str[i+3*len]=='*'
+                   && str[i+4*len]=='*')
+                {puts("yes");goto L1;}
             }
         }
- L1:       puts(ans?"yes":"no");
-    }
+        puts("no");
+  L1:   int x=1;
+      }
 	return 0;
 }

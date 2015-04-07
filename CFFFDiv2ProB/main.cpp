@@ -48,32 +48,7 @@ int GCD(int m, int n)
 {
     return !m ? n : GCD(n%m, m);
 }
-int a[maxn], b[maxn], n, t, m, tn, cur,cnt,maxc;bool maxf;
-int ans;
-int dfs(int i)
-{
-    if(i>=(1<<n)) return 0;
-    int l=dfs(2*i)+a[2*i], r=dfs(2*i+1)+a[2*i+1];
-    ans+=abs(l-r);
-    return max(l, r);
-}
-void Solve_Iterative()
-{
-    for(int i=(tn-1)/2+1;i<=tn;i++) b[i]=0;
-    for(int i=(tn-1)/2;i>=0;i--)
-    {
-        b[i]=max(a[2*i+1]+b[2*i+1], a[2*i+2]+b[2*i+2]);
-    }
-    //cout<<tn<<endl;
-    //for(int i=0;i<=(tn-1)/2;i++) cout<<b[i]<<" ";
-    int cnt=0;
-    for(int i=1;i<=tn;i++)
-    {
-        cnt+=b[(i-1)/2]-b[i]-a[i];
-    }
-    cout<<cnt<<endl;
-}
-
+LL a[27], n, t, m;
 int main()
 {
 /*
@@ -82,12 +57,22 @@ int main()
     freopen ("out.txt" , "w" , stdout);
 #endif
 */
-    while(cin>>n)
+    string str;LL k;
+    cin>>str>>k;LL maxc=0;
+    for(int i=0;i<26;i++) cin>>a[i], maxc=max(maxc, a[i]);
+    LL n=str.size();LL sum=0;
+    for(auto e: str) sum+=a[e-'a'];
+    LL ans=0;
+    if(k*maxc>sum)
     {
-        tn=((1<<(n+1))-2);a[0]=0;
-        for(int i=2;i<=tn+1;i++) scanf("%d", a+i);
-        ans=0;dfs(1);
-        cout<<ans<<endl;
+        for(int i=0;i<n;i++) ans+=(i+1)*a[str[i]-'a'];
+        ans+=(n+1+n+k)*k/2*maxc;
     }
+    else
+    {
+        ans+=(1+k)*k/2*maxc;
+        for(int i=0;i<n;i++) ans+=(i+k+1)*a[str[i]-'a'];
+    }
+    cout<<ans<<endl;
 	return 0;
 }

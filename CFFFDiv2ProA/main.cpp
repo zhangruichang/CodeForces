@@ -48,32 +48,8 @@ int GCD(int m, int n)
 {
     return !m ? n : GCD(n%m, m);
 }
-int a[maxn], b[maxn], n, t, m, tn, cur,cnt,maxc;bool maxf;
-int ans;
-int dfs(int i)
-{
-    if(i>=(1<<n)) return 0;
-    int l=dfs(2*i)+a[2*i], r=dfs(2*i+1)+a[2*i+1];
-    ans+=abs(l-r);
-    return max(l, r);
-}
-void Solve_Iterative()
-{
-    for(int i=(tn-1)/2+1;i<=tn;i++) b[i]=0;
-    for(int i=(tn-1)/2;i>=0;i--)
-    {
-        b[i]=max(a[2*i+1]+b[2*i+1], a[2*i+2]+b[2*i+2]);
-    }
-    //cout<<tn<<endl;
-    //for(int i=0;i<=(tn-1)/2;i++) cout<<b[i]<<" ";
-    int cnt=0;
-    for(int i=1;i<=tn;i++)
-    {
-        cnt+=b[(i-1)/2]-b[i]-a[i];
-    }
-    cout<<cnt<<endl;
-}
-
+int a[maxn], n, t, m;
+bool v[310];
 int main()
 {
 /*
@@ -82,11 +58,20 @@ int main()
     freopen ("out.txt" , "w" , stdout);
 #endif
 */
-    while(cin>>n)
+    int p, n, x, i;
+    while(cin>>p>>n)
     {
-        tn=((1<<(n+1))-2);a[0]=0;
-        for(int i=2;i<=tn+1;i++) scanf("%d", a+i);
-        ans=0;dfs(1);
+        memset(v, 0, sizeof v);bool ok=0;int ans=-1;
+        for(i=1;i<=n;i++)
+        {
+            cin>>x;
+            int in=x%p;
+            if(v[in])
+            {
+                if(!ok) ans=i,ok=1;
+            }
+            v[in]=1;
+        }
         cout<<ans<<endl;
     }
 	return 0;

@@ -48,7 +48,7 @@ int GCD(int m, int n)
 {
     return !m ? n : GCD(n%m, m);
 }
-LL a[27], n, t, m;
+int a[maxn], n, t, m;
 int main()
 {
 /*
@@ -57,14 +57,12 @@ int main()
     freopen ("out.txt" , "w" , stdout);
 #endif
 */
-    string str;LL k;
-    cin>>str>>k;LL maxc=0;
-    for(int i=0;i<26;i++) cin>>a[i], maxc=max(maxc, a[i]);
-    LL n=str.size();LL sum=0;
-    for(auto e: str) sum+=a[e-'a'];
-    LL ans=0;
-    for(int i=0;i<n;i++) ans+=(i+1)*a[str[i]-'a'];
-    ans+=(n+1+n+k)*k/2*maxc;
-    cout<<ans<<endl;
+    int m, n, a;
+    while(cin>>m>>n>>a)
+    {
+        int w= (m%a==0) ? (m/a) : (m/a+1);
+        int h= (m%a==0) ? (m/a) : (m/a+1);
+        cout<<w*h<<endl;
+    }
 	return 0;
 }

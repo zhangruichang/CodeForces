@@ -48,7 +48,18 @@ int GCD(int m, int n)
 {
     return !m ? n : GCD(n%m, m);
 }
-LL a[27], n, t, m;
+int a[maxn], n, t, m;
+string NumToCol(int num)
+{
+    num--;
+    if(num<=0) return "";
+    return NumToCol(num/26)+char(num%26+'A');
+}
+int ColToNum(string s)
+{
+    int n=s.size(), sum=0, wei=1;;;
+    for(int i=n-1;i>=0;i--) sum+=(s[i]-'A'+1)*wei, wei*=26;
+}
 int main()
 {
 /*
@@ -57,14 +68,22 @@ int main()
     freopen ("out.txt" , "w" , stdout);
 #endif
 */
-    string str;LL k;
-    cin>>str>>k;LL maxc=0;
-    for(int i=0;i<26;i++) cin>>a[i], maxc=max(maxc, a[i]);
-    LL n=str.size();LL sum=0;
-    for(auto e: str) sum+=a[e-'a'];
-    LL ans=0;
-    for(int i=0;i<n;i++) ans+=(i+1)*a[str[i]-'a'];
-    ans+=(n+1+n+k)*k/2*maxc;
-    cout<<ans<<endl;
+    cin>>t;
+    for(int ti=1;ti<=t;ti++)
+    {
+        cin>>str;
+        //printf("Case #%d:\n", ti);
+        if(isdigit(str[1]))
+        {
+            int in=str.find('C');
+            string col=str.substr(in+1);
+            cout<<col<<str.substr(0, in)<<end;
+        }
+        else
+        {
+
+        }
+        cout
+    }
 	return 0;
 }

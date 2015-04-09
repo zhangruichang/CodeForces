@@ -48,7 +48,7 @@ int GCD(int m, int n)
 {
     return !m ? n : GCD(n%m, m);
 }
-LL a[27], n, t, m;
+int a[maxn], l[maxn], r[maxn], n, t, m;
 int main()
 {
 /*
@@ -57,14 +57,34 @@ int main()
     freopen ("out.txt" , "w" , stdout);
 #endif
 */
-    string str;LL k;
-    cin>>str>>k;LL maxc=0;
-    for(int i=0;i<26;i++) cin>>a[i], maxc=max(maxc, a[i]);
-    LL n=str.size();LL sum=0;
-    for(auto e: str) sum+=a[e-'a'];
-    LL ans=0;
-    for(int i=0;i<n;i++) ans+=(i+1)*a[str[i]-'a'];
-    ans+=(n+1+n+k)*k/2*maxc;
-    cout<<ans<<endl;
+    while(cin>>n)
+    {
+        for(int i=0;i<n;i++) cin>>a[i];
+        l[0]=1;
+        for(int i=1;i<n;i++)
+        {
+            if(a[i]>a[i-1]) l[i]=l[i-1]+1;
+            else l[i]=1;
+        }
+        r[n-1]=1;
+        for(int i=n-2;i>=0;i--)
+        {
+            if(a[i]<a[i+1]) r[i]=r[i+1]+1;
+            else r[i]=1;
+        }
+        int ans=1;
+        for(int i=0;i<n;i++)
+        {
+            if(i-1>=0 && i+1<n)
+            {
+                if(a[i-1]+1<a[i+1]) ans=max(ans, l[i-1]+r[i+1]+1);
+                else
+                    ans=max(ans, max(l[i-1]+1,r[i+1]+1));
+            }
+            else if(i-1>=0 && i+1>=n) ans=max(ans, l[i-1]+1);
+            else if(i+1<n && i-1<0) ans=max(ans, r[i+1]+1);
+        }
+        cout<<ans<<endl;
+    }
 	return 0;
 }

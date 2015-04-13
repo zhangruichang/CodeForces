@@ -49,6 +49,13 @@ int GCD(int m, int n)
     return !m ? n : GCD(n%m, m);
 }
 LL a[27], n, t, m;
+bool Check(string s)//1 means BC55, 0 means R23C31
+{
+    int i=0, n=s.size();
+    while(i<n && isalpha(s[i])) i++;
+    while(i<n && isdigit(s[i])) i++;
+    return i==n;
+}
 int main()
 {
 /*

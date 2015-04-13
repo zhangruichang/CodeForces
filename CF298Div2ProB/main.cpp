@@ -17,6 +17,7 @@ Contact: zhangruichang112@gmail.com
 #include<cstring>
 #include<fstream>
 #include<iostream>
+#include <sstream>
 #include<algorithm>
 #include <unordered_set>
 #include <unordered_map>
@@ -48,33 +49,20 @@ int GCD(int m, int n)
 {
     return !m ? n : GCD(n%m, m);
 }
+template <typename T>
+string to_string(T value)
+{
+  //create an output string stream
+  ostringstream os ;
+
+  //throw the value into the string stream
+  os << value ;
+
+  //convert the string stream into a string and return
+  return os.str() ;
+}
+
 int a[maxn], n, t, m;
-string NumToCol(int num)
-{
-    num--;
-    if(num<0) return "";
-    return NumToCol(num/26)+char(num%26+'A');
-}
-int ColToNum(string s)
-{
-    //cout<<"s: "<<s<<endl;
-    int n=s.size(), sum=0, wei=1;;;
-    for(int i=n-1;i>=0;i--,wei*=26) sum+=((s[i]-'A'+1)*wei);
-    return sum;
-}
-int stoi(string s)
-{
-    int sum=0;
-    for(auto e: s) sum=sum*10+e-'0';
-    return sum;
-}
-bool Check(string s)//1 means BC55, 0 means R23C31
-{
-    int i=0, n=s.size();
-    while(i<n && isalpha(s[i])) i++;
-    while(i<n && isdigit(s[i])) i++;
-    return i==n;
-}
 int main()
 {
 /*
@@ -83,25 +71,22 @@ int main()
     freopen ("out.txt" , "w" , stdout);
 #endif
 */
-    int t;
-    cin>>t;string str;
-    for(int ti=1;ti<=t;ti++)
+    int v1, v2,t,d;
+    while(cin>>v1>>v2)
     {
-        cin>>str;
-        //printf("Case #%d:\n", ti);
-        if(!Check(str))
+        cin>>t>>d;int cur=v1;
+        int ans=v1;
+        for(int i=2;i<t;i++)
         {
-            int in=str.find('C');
-            int num=stoi(str.substr(in+1));
-            cout<<NumToCol(num)<<str.substr(1, in-1)<<endl;
+            if(abs(cur+d-v2) <= (t-i)*d)
+                cur+=d;
+            else
+                cur=(t-i)*d+v2;
+            //cout<<cur<<" ";
+            ans+=cur;
         }
-        else
-        {
-            int i=0;
-            while(i<str.size() && isalpha(str[i])) i++;
-            string col=str.substr(0, i);
-            cout<<'R'<<str.substr(i)<<'C'<<ColToNum(col)<<endl;
-        }
+        ans+=v2;
+        cout<<ans<<endl;
     }
 	return 0;
 }

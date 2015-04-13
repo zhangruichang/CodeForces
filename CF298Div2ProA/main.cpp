@@ -48,33 +48,9 @@ int GCD(int m, int n)
 {
     return !m ? n : GCD(n%m, m);
 }
+
+
 int a[maxn], n, t, m;
-string NumToCol(int num)
-{
-    num--;
-    if(num<0) return "";
-    return NumToCol(num/26)+char(num%26+'A');
-}
-int ColToNum(string s)
-{
-    //cout<<"s: "<<s<<endl;
-    int n=s.size(), sum=0, wei=1;;;
-    for(int i=n-1;i>=0;i--,wei*=26) sum+=((s[i]-'A'+1)*wei);
-    return sum;
-}
-int stoi(string s)
-{
-    int sum=0;
-    for(auto e: s) sum=sum*10+e-'0';
-    return sum;
-}
-bool Check(string s)//1 means BC55, 0 means R23C31
-{
-    int i=0, n=s.size();
-    while(i<n && isalpha(s[i])) i++;
-    while(i<n && isdigit(s[i])) i++;
-    return i==n;
-}
 int main()
 {
 /*
@@ -83,25 +59,25 @@ int main()
     freopen ("out.txt" , "w" , stdout);
 #endif
 */
-    int t;
-    cin>>t;string str;
-    for(int ti=1;ti<=t;ti++)
+    while(cin>>n)
     {
-        cin>>str;
-        //printf("Case #%d:\n", ti);
-        if(!Check(str))
+        if(n==4) {cout<<"4\n2 4 1 3\n";continue;}
+        int ai=0;
+        for(int i=1;i<=n;i+=2) a[ai++]=i;
+        for(int i=2;i<=n;i+=2)
         {
-            int in=str.find('C');
-            int num=stoi(str.substr(in+1));
-            cout<<NumToCol(num)<<str.substr(1, in-1)<<endl;
+            if(abs(a[ai-1]-i)!=1)
+                a[ai++]=i;
         }
-        else
+        /*
+        for(int i=3;i<=n;i+=3)
         {
-            int i=0;
-            while(i<str.size() && isalpha(str[i])) i++;
-            string col=str.substr(0, i);
-            cout<<'R'<<str.substr(i)<<'C'<<ColToNum(col)<<endl;
-        }
+            if(abs(a[ai-1]-i)!=1)
+                a[ai++]=i;
+        }*/
+        cout<<ai<<endl;
+        for(int i=0;i<ai;i++)
+            cout<<a[i]<<" \n"[i==ai-1];
     }
 	return 0;
 }

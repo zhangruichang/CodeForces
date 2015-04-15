@@ -61,33 +61,39 @@ string to_string(T value)
   //convert the string stream into a string and return
   return os.str() ;
 }
-LL sum[maxn], n, t, m;
+LL sum[maxn];
 int main()
 {
-/*
+
 #ifndef ONLINE_JUDGE
-    freopen ("in.txt" , "r" , stdin);
-    freopen ("out.txt" , "w" , stdout);
+    //freopen ("in.txt" , "r" , stdin);
+    //freopen ("out.txt" , "w" , stdout);
 #endif
-*/
-    LL a, b, n, l, t, m;
+
+    LL a, b, n, l, t, m, L;
     while(cin>>a>>b>>n)
     {
-        sum[1]=a;
-        for(int i=2;i<=maxn;i++) sum[i]=sum[i-1]+(i-1)*b;
+        sum[0]=0;//sumi: A+...+A+(i-1)B
+        for(int i=1;i<=maxn;i++) sum[i]=sum[i-1]+a+(i-1)*b;
         for(int i=0;i<n;i++)
         {
-            cin>>l>>t>>m;
-            cout<<"sum: "<<sum[l]<<" "<<sum[maxn]<<endl;
-            int in=upper_bound(sum+l, sum+maxn+1, sum[l]+t*m)-sum-1;
-            int ii=in;
-            cout<<"ii "<<ii<<" ";
-            while(ii>=l && t<a+(ii-1)*b) ii--;
-            if(ii<l) puts("-1");
-            else
+            cin>>L>>t>>m;
+            int l=L,r=maxn;
+            int ans=-1;
+            while(l<=r)
             {
-                cout<<ii<<endl;
+                if(l+1==r || l==r)
+                {
+                    //cout<<"l r:"<<l<<" "<<r<<endl;
+                    if(t>=a+(r-1)*b && sum[r]-sum[L-1]<=t*m) ans=r;
+                    else if(t>=a+(l-1)*b && sum[l]-sum[L-1]<=t*m) ans=l;
+                    break;
+                }
+                int mid=(l+r)/2;
+                if(t>=a+(mid-1)*b && sum[mid]-sum[L-1]<=t*m) l=mid;
+                else r=mid-1;
             }
+            cout<<ans<<endl;
         }
     }
 	return 0;

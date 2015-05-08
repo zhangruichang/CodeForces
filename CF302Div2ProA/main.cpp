@@ -92,42 +92,36 @@ int main()
     int k;string str;
     while(cin>>k>>str)
     {
-
-    for(int i=0;i<26;i++) a[i]={-1, -1};
-    int lastc=str[0]-'a', lasti=0;
-    a[str[0]-'a']={0,-1};
-    for(int i=1;i<str.size();i++)
-    {
-        char e=str[i];
-        if(a[e-'a'].first==-1)
+        char lastc='a'-1;
+        int n=str.size();
+        for(int i=0;i<26;i++) a[i].fi=-1;
+        for(int i=0;i<n;i++)
         {
-            a[lastc].second=i-1;
-            a[e-'a']={i, -1};
-            lastc=e-'a',lasti=i;
+            char e=str[i];
+            if(a[e-'a'].fi==-1)
+            {
+                if('a'<=lastc && lastc<='z') a[lastc-'a'].se=i-1;
+                a[e-'a'].fi=i;
+                lastc=e;
+            }
         }
-    }
-    a[lastc]={lasti, str.size()-1};
-    //for(auto e: a) cout<<e.first<<" "<<e.second<<endl;
-    int cnt=0;
-    vector<pair<int, int>> ans;
-    for(auto e: a)
-    {
-        //end=a[e-'a'];
-        if(e.first!=-1) cnt++, ans.push_back(e);
-    }
-    sort(ans. begin(), ans.end());
-    //cout<<"log:"<<endl;
-    //cout<<cnt<<" "<<k<<endl;
-    //for(auto e: ans) cout<<e.first<<" "<<e.second<<endl;
-    if(cnt>=k)
-    {
-        puts("YES");
-        for(int i=0;i<k-1;i++)
-                cout<<str.substr(ans[i].first, ans[i].second-ans[i].first+1)<<endl;
-        cout<<str.substr(ans[k-1].first)<<endl;
-        //for(auto e : ans) cout<<e<<endl;
-    }
-    else puts("NO");
+        a[lastc-'a'].se=n-1;
+        //sort(a, a+n);
+        int cnt=0;
+        vector<pair<int, int>> ans;
+        for(auto e: a)
+        {
+            if(e.fi!=-1) cnt++, ans.push_back(e);
+        }
+        sort(ans.begin(), ans.end());
+        if(cnt>=k)
+        {
+            puts("YES");
+            for(int i=0;i<k-1;i++)
+                cout<<str.substr(ans[i].fi, ans[i].se-ans[i].fi+1)<<endl;
+            cout<<str.substr(ans[k-1].fi)<<endl;
+        }
+        else puts("NO");
     }
 	return 0;
 }

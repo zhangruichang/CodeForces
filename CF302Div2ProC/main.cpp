@@ -89,12 +89,18 @@ int main()
     freopen ("out.txt" , "w" , stdout);
 #endif
 */
-    cin>>t;
-    for(int ti=1;ti<=t;ti++)
-    {
-        cin
-        printf("Case #%d:\n", ti);
-        cout
-    }
+    //cin>>t;
+    //for(int ti=1;ti<=t;ti++)
+    //{
+        int aa=100;
+
+        printf("%xd\n", aa);
+        char a[]="abcd";
+        printf("%0xd",a[0],a[1],a[2],a[3]);
+        //printf("%0xd",'a','b','c','d');
+        //cin
+        //printf("Case #%d:\n", ti);
+        //cout
+    //}
 	return 0;
 }

@@ -89,17 +89,12 @@ int main()
     freopen ("out.txt" , "w" , stdout);
 #endif
 */
-    string s;
-    while(cin>>s)
+    cin>>t;
+    for(int ti=1;ti<=t;ti++)
     {
-        int i, sn=s.size();
-        string t="CODEFORCES";int tn=t.size();
-        bool ok=0;
-        for(int i=0;i<sn;i++) for(int j=i;j<sn;j++)
-        {
-            if(s.substr(0, i)+s.substr(j+1)==t) {ok=1;break;}
-        }
-        puts(ok?"YES":"NO");
+        cin
+        printf("Case #%d:\n", ti);
+        cout
     }
 	return 0;
 }

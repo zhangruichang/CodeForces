@@ -80,7 +80,7 @@ LL MultMod(LL a,LL b,LL MOD)
 }
 int a[maxn], n, t, m;
 
-
+string str[110];
 int main()
 {
 /*
@@ -89,17 +89,26 @@ int main()
     freopen ("out.txt" , "w" , stdout);
 #endif
 */
-    string s;
-    while(cin>>s)
+    int n ,k;
+    while(cin>>n>>k)
     {
-        int i, sn=s.size();
-        string t="CODEFORCES";int tn=t.size();
         bool ok=0;
-        for(int i=0;i<sn;i++) for(int j=i;j<sn;j++)
+
+        for(int i=0;i<n;i++) str[i].assign(n, 'S');
+        int cnt=0;
+        if(!k) {ok=1;goto L1;}
+        for(int i=0;i<n;i++) for(int j=0;j<n;j++)
         {
-            if(s.substr(0, i)+s.substr(j+1)==t) {ok=1;break;}
+            if(i%2==0 && j%2==0) str[i][j]='L', cnt++;
+            else if(i%2==1 && j%2==1) str[i][j]='L', cnt++;
+            if(cnt==k) {ok=1;goto L1;}
         }
-        puts(ok?"YES":"NO");
+    L1: if(ok)
+        {
+            puts("YES");
+            for(int i=0;i<n;i++) cout<<str[i]<<endl;
+        }
+        else puts("NO");
     }
 	return 0;
 }

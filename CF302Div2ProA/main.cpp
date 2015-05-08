@@ -78,9 +78,9 @@ LL MultMod(LL a,LL b,LL MOD)
     }
     return ret;
 }
-int a[maxn], n, t, m;
+int n, t, m;
 
-
+pair<int, int> a[26];
 int main()
 {
 /*
@@ -89,17 +89,45 @@ int main()
     freopen ("out.txt" , "w" , stdout);
 #endif
 */
-    string s;
-    while(cin>>s)
+    int k;string str;
+    while(cin>>k>>str)
     {
-        int i, sn=s.size();
-        string t="CODEFORCES";int tn=t.size();
-        bool ok=0;
-        for(int i=0;i<sn;i++) for(int j=i;j<sn;j++)
+
+    for(int i=0;i<26;i++) a[i]={-1, -1};
+    int lastc=str[0]-'a', lasti=0;
+    a[str[0]-'a']={0,-1};
+    for(int i=1;i<str.size();i++)
+    {
+        char e=str[i];
+        if(a[e-'a'].first==-1)
         {
-            if(s.substr(0, i)+s.substr(j+1)==t) {ok=1;break;}
+            a[lastc].second=i-1;
+            a[e-'a']={i, -1};
+            lastc=e-'a',lasti=i;
         }
-        puts(ok?"YES":"NO");
+    }
+    a[lastc]={lasti, str.size()-1};
+    //for(auto e: a) cout<<e.first<<" "<<e.second<<endl;
+    int cnt=0;
+    vector<pair<int, int>> ans;
+    for(auto e: a)
+    {
+        //end=a[e-'a'];
+        if(e.first!=-1) cnt++, ans.push_back(e);
+    }
+    sort(ans. begin(), ans.end());
+    //cout<<"log:"<<endl;
+    //cout<<cnt<<" "<<k<<endl;
+    //for(auto e: ans) cout<<e.first<<" "<<e.second<<endl;
+    if(cnt>=k)
+    {
+        puts("YES");
+        for(int i=0;i<k-1;i++)
+                cout<<str.substr(ans[i].first, ans[i].second-ans[i].first+1)<<endl;
+        cout<<str.substr(ans[k-1].first)<<endl;
+        //for(auto e : ans) cout<<e<<endl;
+    }
+    else puts("NO");
     }
 	return 0;
 }

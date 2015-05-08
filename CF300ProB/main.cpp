@@ -92,14 +92,26 @@ int main()
     string s;
     while(cin>>s)
     {
-        int i, sn=s.size();
-        string t="CODEFORCES";int tn=t.size();
-        bool ok=0;
-        for(int i=0;i<sn;i++) for(int j=i;j<sn;j++)
+        int n=atoi(s.c_str());
+        int maxn=0;
+        for(auto e: s) maxn=max(maxn, e-'0');
+        cout<<maxn<<endl;
+        for(int i=0;i<maxn;i++)
         {
-            if(s.substr(0, i)+s.substr(j+1)==t) {ok=1;break;}
+            string cur;
+            for(auto& e: s)
+            {
+                if(e>='1')
+                    cur+='1', e-=1;
+                else cur+='0';
+            }
+            reverse(cur.begin(), cur.end());
+            while(cur.size()>1 && cur.back()=='0') cur.pop_back();
+            reverse(cur.begin(), cur.end());
+            cout<<cur<<" ";
         }
-        puts(ok?"YES":"NO");
+        cout<<endl;
+        //cout<<maxn<<endl;
     }
 	return 0;
 }

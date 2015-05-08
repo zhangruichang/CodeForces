@@ -78,9 +78,9 @@ LL MultMod(LL a,LL b,LL MOD)
     }
     return ret;
 }
-int a[maxn], n, t, m;
+int a[500+10], n, t, m;
 
-
+int dp[500+10][500+10];
 int main()
 {
 /*
@@ -89,18 +89,19 @@ int main()
     freopen ("out.txt" , "w" , stdout);
 #endif
 */
-    //cin>>t;
-    //for(int ti=1;ti<=t;ti++)
-    //{
-        int aa=100;
-
-        printf("%xd\n", aa);
-        char a[]="abcd";
-        printf("%0xd",a[0],a[1],a[2],a[3]);
-        //printf("%0xd",'a','b','c','d');
-        //cin
-        //printf("Case #%d:\n", ti);
-        //cout
-    //}
+    int b, mod;
+    while(cin>>n>>m>>b>>mod)
+    {
+        for(int i=0;i<n;i++) cin>>a[i];
+        memset(dp, 0, sizeof dp);
+        dp[0][0]=1;
+        for(int j=1;j<=n;j++) for(int i=1;i<=m;i++)  for(int k=0;k<=b;k++)
+        {
+            if(k>=a[j-1]) dp[i][k]=(dp[i][k]+dp[i-1][k-a[j-1]])%mod;
+        }
+        int ans=0;
+        for(int k=0;k<=b;k++) ans=(ans+dp[m][k])%mod;
+        cout<<ans<<endl;
+    }
 	return 0;
 }

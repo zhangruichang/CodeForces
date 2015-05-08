@@ -80,7 +80,7 @@ LL MultMod(LL a,LL b,LL MOD)
 }
 int n, t, m;
 
-pair<int, int> a[26];
+int a[26];
 int main()
 {
 /*
@@ -92,34 +92,27 @@ int main()
     int k;string str;
     while(cin>>k>>str)
     {
-        char lastc='a'-1;
-        int n=str.size();
-        for(int i=0;i<26;i++) a[i].fi=-1;
+        int ai=0, n=str.size();
+        unordered_set<char> myhash;
         for(int i=0;i<n;i++)
         {
             char e=str[i];
-            if(a[e-'a'].fi==-1)
+            if(myhash.find(e)==myhash.end())
             {
-                if('a'<=lastc && lastc<='z') a[lastc-'a'].se=i-1;
-                a[e-'a'].fi=i;
-                lastc=e;
+                myhash.insert(e);
+                a[ai++]=i;
             }
         }
-        a[lastc-'a'].se=n-1;
-        //sort(a, a+n);
-        int cnt=0;
-        vector<pair<int, int>> ans;
-        for(auto e: a)
-        {
-            if(e.fi!=-1) cnt++, ans.push_back(e);
-        }
-        sort(ans.begin(), ans.end());
-        if(cnt>=k)
+        if(myhash.size()>=k)
         {
             puts("YES");
-            for(int i=0;i<k-1;i++)
-                cout<<str.substr(ans[i].fi, ans[i].se-ans[i].fi+1)<<endl;
-            cout<<str.substr(ans[k-1].fi)<<endl;
+            for(int i=0;i<k;i++)
+            {
+                int R;
+                if(i<k-1) R=a[i+1];
+                else R=n;
+                cout<<str.substr(a[i], R-a[i])<<endl;
+            }
         }
         else puts("NO");
     }

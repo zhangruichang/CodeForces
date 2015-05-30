@@ -60,48 +60,43 @@ LL MultMod(LL a,LL b,LL MOD)
     }
     return ret;
 }
+int a[maxn], n, t, m;
 
-int a[500+10][500+10], n, m, q, x, y;
-int s[500+10];
 
 int main()
 {
-    while(~scanf("%d%d%d", &n, &m, &q))
+/*
+#ifndef ONLINE_JUDGE
+    freopen ("in.txt" , "r" , stdin);
+    freopen ("out.txt" , "w" , stdout);
+#endif
+*/
+    int p ,x, y, n, k;
+    while(cin>>n>>k>>p>>x>>y)
     {
-        for(int i=0;i<n;i++) for(int j=0;j<m;j++) cin>>a[i][j];
-        memset(s, 0, sizeof s);
-        for(int i=0;i<n;i++)
+        fill_n(a, n, 1);
+        int cnt=0;
+        for(int i=0;i<k;i++)
         {
-            int len=0;
-            for(int j=0;j<m;j++)
-            {
-                if(a[i][j]) len++;
-                else
-                {
-                    if(len) s[i]=max(s[i], len), len=0;
-                }
-            }
-            s[i]=max(s[i], len);
+            cin>>a[i];
+            if(a[i]>=y) cnt++;
         }
-        for(int qi=0;qi<q;qi++)
+        //int i;
+        for(int i=k;i<n;i++)
         {
-            cin>>x>>y;x--, y--;
-            a[x][y]=1-a[x][y];
-            int len=0, rowlen=0;
-            for(int j=0;j<m;j++)
-            {
-                if(a[x][j]) len++;
-                else
-                {
-                    if(len) rowlen=max(rowlen, len), len=0;
-                }
-            }
-            rowlen=max(rowlen, len);
-            s[x]=rowlen;
-            int maxlen=0;
-            for(int i=0;i<n;i++) maxlen=max(maxlen, s[i]);
-            cout<<maxlen<<endl;
+            if(cnt>=(n+1)/2) break;
+            a[i]=y;
+            cnt++;
         }
+        //if(i==n) {puts("-1"); continue;}
+        int sum=0;
+        for(int i=0;i<n;i++) sum+=a[i];
+        if(sum<=x && cnt>=(n+1)/2)
+        {
+            for(int i=k;i<n;i++) cout<<a[i]<<" ";
+            cout<<endl;
+        }
+        else puts("-1");
     }
-    return 0;
+	return 0;
 }

@@ -60,6 +60,11 @@ LL MultMod(LL a,LL b,LL MOD)
     }
     return ret;
 }
+
+long long inv(long long a,long long m){
+	if(a == 1)return 1;
+	return inv(m%a,m)*(m-m/a)%m;
+}
 LL n, t, m;
 
 LL h1,a1,x1,y1,h2,a2,x2,y2;
@@ -71,27 +76,62 @@ int main()
     freopen ("out.txt" , "w" , stdout);
 #endif
 */
-    while(cin>>m)
+
+    while(~scanf("%d", &m))
     {
+        //time_t start=clock();
         //unordered_set<int> um1, um2;
-        cin>>h1>>a1>>x1>>y1>>h2>>a2>>x2>>y2;
-        LL cnt=0;
-        int r=10*m+10, ans=-1;
+        h1=getint(), a1=getint(), x1=getint(), y1=getint(), h2=getint(), a2=getint(), x2=getint(), y2=getint();
+        //cin>>h1>>a1>>x1>>y1>>h2>>a2>>x2>>y2;
+        //LL cnt=0;
+        LL r=m+10, ans1=-1;
         for(int i=1;i<=r;i++)
         {
-            //um1.insert(h1), um2.insert(h2);
-            //h1=(x1*h1+y1)%m;
-            h1=(MultMod(x1, h1, m)+y1)%m;
-            //h2=(x2*h2+y2)%m;
-            h2=(MultMod(x2, h2, m)+y2)%m;
-            if(h1==a1 && h2==a2)
+            //h1=(MultMod(x1, h1, m)+y1)%m;
+            h1=(x1*h1+y1)%m;
+            if(h1==a1)
             {
-                ans=i;
+                ans1=i;
                 break;
             }
         }
-        cout<<ans<<endl;
-
+        if(ans1==-1) {puts("-1");continue;}
+        LL ans2=-1;
+        for(int i=1;i<=r;i++)
+        {
+            //h2=(MultMod(x2, h2, m)+y2)%m;
+            h2=(x2*h2+y2)%m;
+            if(h2==a2)
+            {
+                ans2=i;
+                break;
+            }
+        }
+        if(ans2==-1) {puts("-1");continue;}
+        for(int i=1;i<=r;i++)
+        {
+            h1=(x1*h1+y1)%m;
+            if(h1==a1)
+            {
+                ans1=i;
+                break;
+            }
+        }
+        for(int i=1;i<=r;i++)
+        {
+            h2=(x2*h2+y2)%m;
+            if(h2==a2)
+            {
+                ans2=i;
+                break;
+            }
+        }
+        //cout<<ans1<<" "<<ans2<<endl;
+        if(ans1!=-1 && ans2!=-1)
+            printf("%d\n", (ans1*ans2/GCD(ans1, ans2)) % m);
+            //cout<<ans1*ans2/GCD(ans1, ans2)<<endl;
+            //printf("%d\n", MultMod(    MultMod(ans1, ans2, m), inv(GCD(ans1, ans2),m), m)   );
+        else puts("-1");
     }
 	return 0;
 }

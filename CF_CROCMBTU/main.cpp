@@ -2,7 +2,25 @@
 Author: richard
 Contact: zhangruichang112@gmail.com
 */
-#include <bits/stdc++.h>
+#include<set>
+#include<map>
+#include<list>
+#include<cmath>
+#include<queue>
+#include<stack>
+#include<ctime>
+#include<cstdio>
+#include<string>
+#include<vector>
+#include<climits>
+#include<cstdlib>
+#include<cstring>
+#include<fstream>
+#include<sstream>
+#include<iostream>
+#include<algorithm>
+#include <unordered_set>
+#include <unordered_map>
 using namespace std;
 const int maxn = 1e6 + 10;
 typedef long long LL;
@@ -61,8 +79,6 @@ LL MultMod(LL a,LL b,LL MOD)
     return ret;
 }
 int a[maxn], n, t, m;
-
-
 int main()
 {
 /*
@@ -71,29 +87,22 @@ int main()
     freopen ("out.txt" , "w" , stdout);
 #endif
 */
-    string str;int k;
-    while(cin>>str>>k)
+    string str;
+    while(cin>>str)
     {
         int n=str.size();
-        for(int i=0;i<n-1 && k>0;i++)
+        string ans;
+        int i=0;
+        if(str[0]=='f')
         {
-            int j=i+1, maxj=-1, kk=k;
-            char maxc='0'-1;
-            while(kk>0 && j<n)
-            {
-                if(maxc<str[j]) maxc=str[j], maxj=j;
-                kk--;j++;
-            }
-            //cout<<"i maxj kk: "<<i<<" "<<maxj<<" "<<k<<endl;
-            if(maxj!=-1 && str[i]<str[maxj])
-            {
-                for(int ii=maxj;ii>i;ii--)
-                    swap(str[ii], str[ii-1]);
-                k-=maxj-i;
-            }
-            //cout<<"str: "<<str<<endl;
-        }
-        cout<<str<<endl;
+            ans+="ftp://", i+=3;
+        } else ans+="http://", i+=4;
+        int s=i++;
+        while(i+1<n && !(str[i]=='r' && str[i+1]=='u')) i++;
+        ans+=str.substr(s, i-s)+".ru";
+        i+=2;
+        if(i<n) ans+="/"+str.substr(i);
+        cout<<ans<<endl;
     }
 	return 0;
 }

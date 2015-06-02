@@ -2,7 +2,25 @@
 Author: richard
 Contact: zhangruichang112@gmail.com
 */
-#include <bits/stdc++.h>
+#include<set>
+#include<map>
+#include<list>
+#include<cmath>
+#include<queue>
+#include<stack>
+#include<ctime>
+#include<cstdio>
+#include<string>
+#include<vector>
+#include<climits>
+#include<cstdlib>
+#include<cstring>
+#include<fstream>
+#include<sstream>
+#include<iostream>
+#include<algorithm>
+#include <unordered_set>
+#include <unordered_map>
 using namespace std;
 const int maxn = 1e6 + 10;
 typedef long long LL;
@@ -61,8 +79,6 @@ LL MultMod(LL a,LL b,LL MOD)
     return ret;
 }
 int a[maxn], n, t, m;
-
-
 int main()
 {
 /*
@@ -71,29 +87,15 @@ int main()
     freopen ("out.txt" , "w" , stdout);
 #endif
 */
-    string str;int k;
-    while(cin>>str>>k)
+    int r, g, b;
+    while(cin>>r>>g>>b)
     {
-        int n=str.size();
-        for(int i=0;i<n-1 && k>0;i++)
-        {
-            int j=i+1, maxj=-1, kk=k;
-            char maxc='0'-1;
-            while(kk>0 && j<n)
-            {
-                if(maxc<str[j]) maxc=str[j], maxj=j;
-                kk--;j++;
-            }
-            //cout<<"i maxj kk: "<<i<<" "<<maxj<<" "<<k<<endl;
-            if(maxj!=-1 && str[i]<str[maxj])
-            {
-                for(int ii=maxj;ii>i;ii--)
-                    swap(str[ii], str[ii-1]);
-                k-=maxj-i;
-            }
-            //cout<<"str: "<<str<<endl;
-        }
-        cout<<str<<endl;
+        int minx=min(r, min(g, b));
+        int ans=r/3+g/3+b/3;
+        for(int i=0;i<3 && minx-i>=0;i++)
+            ans=max(ans, minx-i+(r-minx+i)/3+(g-minx+i)/3+(b-minx+i)/3);
+        cout<<ans<<endl;
+        //cout<<max(r/3+g/3+b/3, minx+(r-minx)/3+(g-minx)/3+(b-minx)/3, )<<endl;
     }
 	return 0;
 }

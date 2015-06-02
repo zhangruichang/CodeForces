@@ -2,7 +2,25 @@
 Author: richard
 Contact: zhangruichang112@gmail.com
 */
-#include <bits/stdc++.h>
+#include<set>
+#include<map>
+#include<list>
+#include<cmath>
+#include<queue>
+#include<stack>
+#include<ctime>
+#include<cstdio>
+#include<string>
+#include<vector>
+#include<climits>
+#include<cstdlib>
+#include<cstring>
+#include<fstream>
+#include<sstream>
+#include<iostream>
+#include<algorithm>
+#include <unordered_set>
+#include <unordered_map>
 using namespace std;
 const int maxn = 1e6 + 10;
 typedef long long LL;
@@ -61,8 +79,6 @@ LL MultMod(LL a,LL b,LL MOD)
     return ret;
 }
 int a[maxn], n, t, m;
-
-
 int main()
 {
 /*
@@ -71,29 +87,39 @@ int main()
     freopen ("out.txt" , "w" , stdout);
 #endif
 */
-    string str;int k;
-    while(cin>>str>>k)
+    string str;int t, x1, y1, x2, y2;
+    while(cin>>t>>x1>>y1>>x2>>y2)
     {
-        int n=str.size();
-        for(int i=0;i<n-1 && k>0;i++)
+        cin>>str;
+        int e=0, w=0, n=0, s=0;
+        if(x2>x1) e=x2-x1;
+        else w=x1-x2;
+        if(y2>y1) n=y2-y1;
+        else s=y1-y2;
+        int ans=0;bool ok=0;
+        for(int i=0;i<str.size();i++)
         {
-            int j=i+1, maxj=-1, kk=k;
-            char maxc='0'-1;
-            while(kk>0 && j<n)
+            char es=str[i];
+            if(es=='S')
             {
-                if(maxc<str[j]) maxc=str[j], maxj=j;
-                kk--;j++;
+                if(s>0) s--;
             }
-            //cout<<"i maxj kk: "<<i<<" "<<maxj<<" "<<k<<endl;
-            if(maxj!=-1 && str[i]<str[maxj])
+            else if(es=='N')
             {
-                for(int ii=maxj;ii>i;ii--)
-                    swap(str[ii], str[ii-1]);
-                k-=maxj-i;
+                if(n>0) n--;
             }
-            //cout<<"str: "<<str<<endl;
+            else if(es=='E')
+            {
+                if(e>0) e--;
+            }
+            else
+            {
+                if(w) w--;
+            }
+            if(!e && !w && !n && !s) {ok=1;ans=i+1;break;}
         }
-        cout<<str<<endl;
+        if(ok) cout<<ans<<endl;
+        else puts("-1");
     }
 	return 0;
 }

@@ -60,8 +60,18 @@ LL MultMod(LL a,LL b,LL MOD)
     }
     return ret;
 }
-int a[maxn], n, t, m;
-
+//int a[maxn], n, t, m;
+//
+//1 2 3
+//2 4 6
+//3 6 9
+inline LL lessthanmid(LL mid, LL n, LL m)
+{
+    LL sum=0;
+    for(int i=1;i<=n;i++)
+        sum+=min(m, mid/i);
+    return sum;
+}
 
 int main()
 {
@@ -71,29 +81,17 @@ int main()
     freopen ("out.txt" , "w" , stdout);
 #endif
 */
-    string str;int k;
-    while(cin>>str>>k)
+    LL n, m, k;
+    while(cin>>n>>m>>k)
     {
-        int n=str.size();
-        for(int i=0;i<n-1 && k>0;i++)
+        LL low=1, high=n*m;
+        while(low<high)
         {
-            int j=i+1, maxj=-1, kk=k;
-            char maxc='0'-1;
-            while(kk>0 && j<n)
-            {
-                if(maxc<str[j]) maxc=str[j], maxj=j;
-                kk--;j++;
-            }
-            //cout<<"i maxj kk: "<<i<<" "<<maxj<<" "<<k<<endl;
-            if(maxj!=-1 && str[i]<str[maxj])
-            {
-                for(int ii=maxj;ii>i;ii--)
-                    swap(str[ii], str[ii-1]);
-                k-=maxj-i;
-            }
-            //cout<<"str: "<<str<<endl;
+            LL mid=(low+high)/2;
+            if(lessthanmid(mid, n, m)<k) low=mid+1;
+            else high=mid;
         }
-        cout<<str<<endl;
+        cout<<low<<endl;
     }
 	return 0;
 }

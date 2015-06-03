@@ -2,25 +2,7 @@
 Author: richard
 Contact: zhangruichang112@gmail.com
 */
-#include<set>
-#include<map>
-#include<list>
-#include<cmath>
-#include<queue>
-#include<stack>
-#include<ctime>
-#include<cstdio>
-#include<string>
-#include<vector>
-#include<climits>
-#include<cstdlib>
-#include<cstring>
-#include<fstream>
-#include<sstream>
-#include<iostream>
-#include<algorithm>
-#include <unordered_set>
-#include <unordered_map>
+#include <bits/stdc++.h>
 using namespace std;
 const int maxn = 1e6 + 10;
 typedef long long LL;
@@ -78,20 +60,8 @@ LL MultMod(LL a,LL b,LL MOD)
     }
     return ret;
 }
-int a[60][60], n, t, m, x, y;
+int a[maxn], n, t, m;
 
-bool v[60];
-
-void dfs(int i)
-{
-    //if(v[i]) return ;
-    v[i]=1;
-    for(int j=1;j<=n;j++)
-    {
-        if(v[j]) continue;
-        if(a[i][j]) dfs(j);
-    }
-}
 
 int main()
 {
@@ -101,22 +71,28 @@ int main()
     freopen ("out.txt" , "w" , stdout);
 #endif
 */
-    while(cin>>n>>m)
+    int n, k;
+    while(cin>>n>>k)
     {
-        memset(a, 0, sizeof a);
-        for(int i=0;i<m;i++)
+        for(int i=0;i<n;i++) cin>>a[i];
+        int i=0;
+        while(k>0 && i<n && a[i]<0)
         {
-            cin>>x>>y;
-            a[x][y]=1;
-            a[y][x]=1;
+            a[i]=-a[i], k--, i++;
         }
-        int cnt=0;
-        memset(v, 0 ,sizeof v);
-        for(int i=1;i<=n;i++)
+        if(k>0 && (k&1))
         {
-            if(!v[i]) dfs(i), cnt++;
+            if(i<n)
+            {
+                if(i-1>=0 && abs(a[i-1])<abs(a[i])) i--;
+                a[i]=-a[i];
+            }
+            else
+                a[n-1]=-a[n-1];
         }
-        cout<<(1LL<<(n-cnt))<<endl;
+        int sum=0;
+        for(int i=0;i<n;i++) sum+=a[i];
+        cout<<sum<<endl;
     }
 	return 0;
 }

@@ -2,7 +2,25 @@
 Author: richard
 Contact: zhangruichang112@gmail.com
 */
-#include <bits/stdc++.h>
+#include<set>
+#include<map>
+#include<list>
+#include<cmath>
+#include<queue>
+#include<stack>
+#include<ctime>
+#include<cstdio>
+#include<string>
+#include<vector>
+#include<climits>
+#include<cstdlib>
+#include<cstring>
+#include<fstream>
+#include<sstream>
+#include<iostream>
+#include<algorithm>
+#include <unordered_set>
+#include <unordered_map>
 using namespace std;
 const int maxn = 1e6 + 10;
 typedef long long LL;
@@ -61,10 +79,7 @@ LL MultMod(LL a,LL b,LL MOD)
     return ret;
 }
 int a[maxn], n, t, m;
-
-char s[200];
-bool dp[200][8];
-int p[200][8];
+string str;
 int main()
 {
 /*
@@ -73,49 +88,44 @@ int main()
     freopen ("out.txt" , "w" , stdout);
 #endif
 */
-    scanf("%s", s+1);
-    memset(dp, 0, sizeof dp);memset(p, 0, sizeof p);
-    dp[0][0]=1;
-    bool ok=0;
-    stack<char> st;
-    for(int i=1;!ok && s[i];i++)
+    cin>>str;
+    int n=str.size();
+    for(int i=n-1;i>=0;i--)
     {
-        int x=s[i]-'0';
-        for(int j=0;!ok && j<i;j++)
+        int e =str[i]-'0';
+        if(e%2==0)
         {
-            for(int k=0;!ok && k<8;k++)
+            for(int j=i-1;j>=0;j--) for(int k=j-1;k>=0;k--)
             {
-                if(!dp[j][k]) continue;
-                p[i][(k*10+x)%8]=j;
-                dp[i][(k*10+x)%8]=1;
-                if((k*10+x)%8==0)
+                int num=(str[k]-'0')*100 + (str[j]-'0') *10 + str[i]-'0';
+                if(num%8==0)
                 {
-                    ok=1;
-                    int t=i, cur=0;
-                    while(t)
-                    {
-                        st.push(s[t]);
-                        int tmp=t;
-                        t=p[t][cur];
-                        int tcur=cur;
-                        for(cur=0;cur<8;cur++)
-                        {
-                            if(dp[t][cur] && (cur*10+s[tmp]-'\0')%8==tcur) break;
-                        }
-                    }
+                    puts("YES");
+                    if(str[k]!='0')
+                       cout<<str[k]<<str[j]<<str[i]<<endl;
+                    else if(str[j]!='0')
+                        cout<<str[j]<<str[i]<<endl;
+                    else
+                        cout<<str[i]<<endl;
+                    return 0;
                 }
             }
         }
     }
-    if(st.empty()) puts("NO");
-    else
+    for(auto e: str) if(e=='8' || e=='0') {puts("YES");cout<<e<<endl;return 0;}
+    for(int i=0;i<n;i++) for(int j=i+1;j<n;j++)
     {
-        puts("YES");
-        while(!st.empty())
+        int num= (str[i]-'0')*10+ str[j]-'0';
+        if(num%8==0)
         {
-            cout<<st.top();st.pop();
+            puts("YES");
+            if(str[i]!='0')
+                cout<<str[i]<<str[j]<<endl;
+            else
+                cout<<str[j]<<endl;
+            return 0;
         }
-        cout<<endl;
     }
+    puts("NO");
 	return 0;
 }
